@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Inscription au Nyaka Nansi 2024{% endblock %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" alt="" class="img-fluid">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2>
+                    Coeurs Vaillants Ames Vaillantes
+                </h2>
+                <h3>Dicosèse d'Abidjan</h3>
+            </div>
+        </div>
+    </div>
+    <div class="activite">
+        <div class="activite-text" data-aos="zoom-out-down" data-aos-easing="ease-in-back" data-aos-duration="3000">
+            <div class="container">
+                <h3 class="mt-5">Inscription camp de formation niveau II et Supérieur - M’bonoua 2024</h3>
+                <p class="text-start mt-5">
+                    Chers Accompagnateurs CV-AV, <br>
+                    Pour garantir votre participation au Camp de Formation Niveau II et Supérieur organisé par le Bureau Diocésain des CV-AV d'Abidjan, veuillez
+                    lire attentivement les consignes et effectuer les actions demandées. <br>
+                    Merci de votre engagement et à bientôt au camp ! <br>
+                    Le Bureau Diocésain des CV-AV d'Abidjan
+                </p>
+
+            </div>
+
+        </div>
+        <div class="call-action" style="margin-top: 80px;">
+            <a href="{{ path('app_frontend_notice_index') }}" class="btnAction">
+                Suivant
+            </a>
+        </div>
+    </div>
+{% endblock %}

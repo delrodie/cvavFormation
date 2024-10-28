@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" alt="" class="img-fluid">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2>
+                    Coeurs Vaillants Ames Vaillantes
+                </h2>
+                <h3>Dicosèse d'Abidjan</h3>
+            </div>
+        </div>
+    </div>
+    <div class="activite">
+        <div class="activite-text" data-aos="zoom-out-down" data-aos-easing="ease-in-back" data-aos-duration="3000">
+            <div class="container">
+                <h3 class="mt-5">ÉTAPES D'INSCRIPTION ET DE PAIEMENT </h3>
+                <div class="text-start mt-5">
+                    <ol>
+                        <li>Assurez-vous de figurer sur la liste officielle des campeurs de votre section de base (voir votre responsable de section).</li>
+                        <li>Remplissez le formulaire d'inscription en suivant les indications puis cliquez sur “suivant” pour valider votre enregistrement à travers
+                            le paiement de votre participant au plus tard le 08 décembre 2024.</li>
+                        <li>Procédez au paiement de votre participation via la plateforme, en utilisant l'opérateur Wave : 5 000 Frs CFA</li>
+                        <li>Téléchargez ou faite la capture de votre reçu de paiement</li>
+                    </ol>
+                    <strong><em><u>NB</u>: Aucun remboursement ne sera effectué en cas de désistement ou si vous vous êtes inscrit(e) sans pour autant figurer préalablement sur la
+                            liste officielle de votre section.</em></strong>
+                    <div class="mt-3">
+                        <strong><em><u>Important</u>: Munissez-vous de votre carnet de baptême à jour ainsi que de l'attestation de votre dernier camp de formation avant de continuer
+                                l'inscription.</em></strong>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    Pour toute assistance, veuillez contacter AP SIKA LUC au <a href="tel:+2250709217027">07 09 21 70 27</a>  ou AP EMMANUEL BALLE au
+                    <a href="tel:+2250708151927">07 08 15 19 27</a>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+        <div class="call-action" style="margin-top: 80px;">
+            <a href="#" class="btnAction">
+                Je participe
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %} ÉTAPES D'INSCRIPTION ET DE PAIEMENT{% endblock %}
+
