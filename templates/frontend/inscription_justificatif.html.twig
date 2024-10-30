@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Téléchargement des justificatifs {% endblock %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" alt="" class="img-fluid activite">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2 class="titre-activite">
+                    M'bonoua 2024
+                </h2>
+                <h3>Inscription camp de formation niveau II et Supérieur</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="formulaire" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="2000">
+            <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
+                <h2 class="titre">Pièces justificatives</h2>
+            </div>
+            {{ form_start(form) }}
+            <div class="form-group row">
+                <div class="col-12 col-lg-6 mt-4">{{ form_row(form.sacrement) }}</div>
+                <div class="col-12 col-lg-6 mt-4">{{ form_row(form.dernierCulte) }}</div>
+                <div class="col-12 col-lg-6 mt-4">{{ form_row(form.attestation) }}</div>
+                {{ form_widget(form) }}
+                <div class="col-6 mt-5 mb-3 d-grid gap-2">
+                    <a href="{{ path('app_frontend_inscription_identite') }}" class="btn btn-outline-secondary btn-lg">Annuler</a>
+                </div>
+                <div class="col-6 mt-5 mb-3 d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Suivant</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <form>
+            </form>
+        </div>
+    </div>
+    <div id="loader-overlay" style="display: none">
+        <div class="loader"></div>
+    </div>
+{% endblock %}

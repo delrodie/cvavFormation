@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CampeurRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CampeurRepository::class)]
@@ -40,7 +41,7 @@ class Campeur
     #[ORM\Column(nullable: true)]
     private ?bool $medical = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $traitement = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -60,6 +61,18 @@ class Campeur
 
     #[ORM\ManyToOne]
     private ?Section $section = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sexe = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateNaissance = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lieuNaissance = null;
 
     public function getId(): ?int
     {
@@ -254,6 +267,54 @@ class Campeur
     public function setSection(?Section $section): static
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): static
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?\DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    public function getLieuNaissance(): ?string
+    {
+        return $this->lieuNaissance;
+    }
+
+    public function setLieuNaissance(?string $lieuNaissance): static
+    {
+        $this->lieuNaissance = $lieuNaissance;
 
         return $this;
     }

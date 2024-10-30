@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    wave_api_key: 'wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ'
+    wave_webhook_secret: 'WH_A0iNtStwnWzh'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +24,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\GestionJustificatif:
+        arguments:
+            $sacrementDirectory: '%kernel.project_dir%/public/upload/sacrement'
+            $dernierDirectory: '%kernel.project_dir%/public/upload/dernier_culte'
+            $attestationDirectory: '%kernel.project_dir%/public/upload/attestation'
