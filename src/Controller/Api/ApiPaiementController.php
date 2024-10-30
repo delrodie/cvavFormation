@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Entity\Campeur;
+use App\Entity\Participer;
 use App\Service\AllRepositories;
 use App\Service\Gestion;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,8 +32,12 @@ class ApiPaiementController extends AbstractController
         $reqSection = (int) $getContent['selectSection'];
         $reqVicariat = (int) $getContent['selectVicariat'];
         $reqDoyenne = (int) $getContent['selectDoyenne'];
+        $inputResponsable = (string) $this->gestion->validForm($getContent['inputResponsable']);
+        $inputContact = (string) $this->gestion->validForm($getContent['inputContact']);
 
         $participant = $request->getSession()->get('information');
+
+        $formation = $this->allRepositories->getFormation();
 
         $campeur = New Campeur();
         $campeur->setNom(strtoupper($participant->getNom()));
@@ -55,10 +60,26 @@ class ApiPaiementController extends AbstractController
         $campeur->setDernierCulte($participant->getDernierCulte());
         $campeur->setAttestation($participant->getAttestation());
         $campeur->setSlug($participant->getSlug());
+        $campeur->setResponsable(strtoupper($inputResponsable));
+        $campeur->setResponsableContact($inputContact);
 
-//        $this->entityManager->persist($campeur);
-//        $this->entityManager->flush();
+        $this->entityManager->persist($campeur);
 
-        return $this->json($campeur);
+        // Particiaption
+        $participation = new Participer();
+        $participation->setMontant((int) $formation->getMontant());
+        $participation->setCampeur($campeur);
+        $participation->setFormation($formation);
+
+        $this->entityManager->persist($participation);
+
+        $this->entityManager->flush();
+
+        $result = [
+            'matricule' => $campeur->getMatricule(),
+            'montant' => $participation->getMontant(),
+        ];
+
+        return $this->json($result);
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Inscription au Nyaka Nansi 2024{% endblock %}
+{% block title %}{{ parent() }} - Inscription au {{ formation.nom }}{% endblock %}
 
 {% block body %}
     <div class="overflow-hidden">
@@ -19,7 +19,7 @@
     <div class="activite">
         <div class="activite-text" data-aos="zoom-out-down" data-aos-easing="ease-in-back" data-aos-duration="3000">
             <div class="container">
-                <h3 class="mt-5">Inscription camp de formation niveau II et Supérieur - M’bonoua 2024</h3>
+                <h3 class="mt-5">Inscription au {{ formation.nom }} - {{ formation.lieu|raw() }}</h3>
                 <p class="text-start mt-5">
                     Chers Accompagnateurs CV-AV, <br>
                     Pour garantir votre participation au Camp de Formation Niveau II et Supérieur organisé par le Bureau Diocésain des CV-AV d'Abidjan, veuillez

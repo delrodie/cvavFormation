@@ -1,0 +1,2 @@
+INSERT INTO `formation` (`id`, `nom`, `lieu`, `montant`, `debut_at`, `fin_at`, `date_line_at`) VALUES
+(2, 'Camp de formation niveau II et Supérieur', 'M\''bonoua 2024', 5000, '2024-12-27', '2024-12-29', '2024-12-15');

@@ -74,6 +74,15 @@ class Campeur
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieuNaissance = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $statut = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $responsable = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $responsableContact = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -315,6 +324,42 @@ class Campeur
     public function setLieuNaissance(?string $lieuNaissance): static
     {
         $this->lieuNaissance = $lieuNaissance;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?string $statut): static
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?string
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?string $responsable): static
+    {
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getResponsableContact(): ?string
+    {
+        return $this->responsableContact;
+    }
+
+    public function setResponsableContact(?string $responsableContact): static
+    {
+        $this->responsableContact = $responsableContact;
 
         return $this;
     }

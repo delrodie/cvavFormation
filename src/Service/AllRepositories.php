@@ -4,16 +4,19 @@ namespace App\Service;
 
 use App\Repository\CampeurRepository;
 use App\Repository\DoyenneRepository;
+use App\Repository\FormationRepository;
+use App\Repository\ParticiperRepository;
 use App\Repository\SectionRepository;
 use App\Repository\VicariatRepository;
 
 class AllRepositories
 {
     public function __construct(
-        private CampeurRepository $campeurRepository,
-        private VicariatRepository $vicariatRepository,
-        private DoyenneRepository $doyenneRepository,
-        private SectionRepository $sectionRepository
+        private CampeurRepository   $campeurRepository,
+        private VicariatRepository  $vicariatRepository,
+        private DoyenneRepository   $doyenneRepository,
+        private SectionRepository   $sectionRepository,
+        private FormationRepository $formationRepository, private readonly ParticiperRepository $participerRepository
     )
     {
     }
@@ -55,5 +58,15 @@ class AllRepositories
     public function getCampeurByMatricule(string $matricule)
     {
         return $this->campeurRepository->findOneBy(['matricule' => $matricule]);
+    }
+
+    public function getFormation()
+    {
+        return $this->formationRepository->findFormationEncours();
+    }
+
+    public function getParticipationByCampeur(string $matricule)
+    {
+        return $this->participerRepository->findOneByCampeur($matricule);
     }
 }

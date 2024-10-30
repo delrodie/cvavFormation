@@ -43,6 +43,14 @@
                         <select name="selectSection" id="selectSection" class="form-select form-select-lg" required>
                         </select>
                     </div>
+                    <div class="col-12 col-md-6 mt-4">
+                        <label for="selectSection">Nom et prenoms du responsable de section</label>
+                        <input type="text" class="form-control form-control-lg" name="_responsable" id="inputResponsable" autocomplete="off" required>
+                    </div>
+                    <div class="col-12 col-md-6 mt-4">
+                        <label for="selectSection">Contact de votre responsable de section</label>
+                        <input type="tel" class="form-control form-control-lg" name="_contact" id="inputContact" autocomplete="off" required>
+                    </div>
                     <div class="col-6 mt-5 mb-3 d-grid gap-2">
                         <a href="{{ path('app_frontend_inscription_justificatif') }}" class="btn btn-outline-secondary btn-lg">Annuler</a>
                     </div>
@@ -127,7 +135,9 @@
                 var formData = {
                     selectVicariat: $('#selectVicariat').val(),
                     selectDoyenne: $('#selectDoyenne').val(),
-                    selectSection: $('#selectSection').val()
+                    selectSection: $('#selectSection').val(),
+                    inputResponsable: $('#inputResponsable').val(),
+                    inputContact: $('#inputContact').val()
                 };
 
                 console.log(JSON.stringify(formData))
@@ -180,7 +190,7 @@
                             //if (result.isConfirmed) {
                              //   window.location = "{{ absolute_url(path('app_frontend_inscription_identite')) }}"
                             //}
-                        //});
+                        // });
 
                     },
                     error: function(xhr, status, error) {

@@ -50,14 +50,17 @@ class ApiWaveController extends AbstractController
                 $matricule = basename($data['success_url']);
 
                 $aspirant = $this->allRepositories->getCampeurByMatricule($matricule);
+                $participation = $this->allRepositories->getParticipationByCampeur($matricule);
 
-                if ($aspirant){
-                    $aspirant->setWaveId($content->id);
-                    $aspirant->setWaveCheckoutStatus($content->checkout_status);
-                    $aspirant->setWaveClientReference($content->client_reference);
-                    $aspirant->setWavePaymentStatus($content->payment_status);
-                    $aspirant->setWaveWhenCompleted($content->when_completed);
-                    $aspirant->setWaveWhenCreated($content->when_created);
+                if ($participation){
+                    $participation->setWaveId($content->id);
+                    $participation->setWaveCheckoutStatus($content->checkout_status);
+                    $participation->setWaveClientReference($content->client_reference);
+                    $participation->setWavePaymentStatus($content->payment_status);
+                    $participation->setWaveWhenCompleted($content->when_completed);
+                    $participation->setWaveWhenCreated($content->when_created);
+
+                    $aspirant->setStatut('VALIDE');
 
                     $this->entityManager->flush();
                 }

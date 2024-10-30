@@ -59,4 +59,13 @@ class Gestion
     {
         return (new AsciiSlugger())->slug(strtolower($string));
     }
+
+    /**
+     * @param $str
+     * @return string
+     */
+    public function validForm($str): string
+    {
+        return htmlspecialchars(stripslashes(trim($str)));
+    }
 }
