@@ -1,0 +1,154 @@
+{% extends 'backend_layout.html.twig' %}
+{% block title %}Tableau de bord{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-semibold">Grades</h5>
+                        <p class="card-subtitle mb-0">Statistiques de participation par grade</p>
+                        <div class="owl-carousel collectibles-carousel owl-theme mt-9">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-semibold">Finances</h5>
+                        <p class="card-subtitle mb-0">Montant total des participations</p>
+                        <div class="card overflow-hidden mt-9">
+                            <img src="{{ asset('backoffice/img/finance.jpg') }}" alt="bg-card" height="220">
+                            <div class="card-img-overlay text-white">
+                                <div class="d-flex align-items-start flex-column h-100">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow-none mb-0">
+                            <div class="card-body p-0">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h2 class="fw-semibold mb-0">0 FCFA</h2>
+                                </div>
+                                <div class="d-flex align-items-center">
+                        <span class="ms-1">
+                          <i class="ti-user text-primary"></i>
+                        </span>
+                                    <span class="text-dark fs-3 fw-bold ms-1">Participants</span>
+                                    <span class="text-primary fw-bold fs-3 ms-2">(0)</span>
+                                </div>
+                                <button class="btn btn-light-primary text-primary w-100 mt-3"> Voir la liste </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h5 class="card-title fw-semibold">Vicariats</h5>
+                                <p class="card-subtitle mb-0">Statistiques de participation</p>
+                            </div>
+                        </div>
+                        <div class="card mt-4 mb-0 shadow-none">
+                            <div class="table-responsive">
+                                <table class="table mb-0 align-middle text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="ps-0">Vicariats</th>
+                                        <th class="text-center">Participants</th>
+                                        <th class="text-center">Montants</th>
+                                        <th class="text-center">Pourcentages</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-dark ">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- recent history -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-semibold">Derniers inscrits</h5>
+                        <p class="card-subtitle mb-0">Liste des 5 derniers isncrits</p>
+                        <div class="card shadow-none mt-9 mb-0">
+                            <div class="table-responsive">
+                                <table class="table text-nowrap align-middle mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="ps-0">Nom & prenoms</th>
+                                        <th>Grades</th>
+                                        <th>Matricule</th>
+                                        <th>Montant</th>
+                                        <th>Section</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-dark ">
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!-- end container fluid -->
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/vendor/css/owl.carousel.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('backoffice/vendor/js/owl.carousel.min.js') }}"></script>
+    <script>
+        $(function () {
+            //
+            // Carousel
+            //
+            $(".collectibles-carousel").owlCarousel({
+                loop: true,
+                margin: 30,
+                mouseDrag: true,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplaySpeed: 2000,
+                nav: false,
+                dots: false,
+                rtl: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                    },
+                    576: {
+                        items: 2,
+                    },
+                    768: {
+                        items: 3,
+                    },
+                },
+            });
+        });
+
+    </script>
+{% endblock %}
