@@ -26,13 +26,26 @@ class AllRepositories
         return $this->campeurRepository->findOneBy(['slug' => $slug]);
     }
 
-    public function getVicariat(int $id = null)
+    public function getVicariat(int $id = null, string $slug = null)
     {
         if ($id){
             return $this->vicariatRepository->findOneBy(['id' => $id]);
         }
 
+        if ($slug){
+            return $this->vicariatRepository->findOneBy(['slug' => $slug]);
+        }
+
         return $this->vicariatRepository->findBy([],['nom' => 'ASC']);
+    }
+
+    public function getLastVicariat(string $slug)
+    {
+        $lastVicariat = $this->vicariatRepository->findOneBy(['slug' => $slug]);
+        if ($lastVicariat){
+            return false;
+        }
+        return $this->vicariatRepository->findOneBy([],['id' => 'DESC']);
     }
 
     public function getDoyenneByVicariat(int $vicariat)
@@ -68,5 +81,13 @@ class AllRepositories
     public function getParticipationByCampeur(string $matricule)
     {
         return $this->participerRepository->findOneByCampeur($matricule);
+    }
+
+    public function getLastDoyenne(string $slug)
+    {
+        $lastDoyenne = $this->doyenneRepository->findOneBy(['slug' => $slug]);
+        if ($lastDoyenne) return false;
+
+        return $this->doyenneRepository->findOneBy([],['id' => "DESC"]);
     }
 }

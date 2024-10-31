@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Doyenne;
 use Symfony\Component\String\AbstractUnicodeString;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -67,5 +68,52 @@ class Gestion
     public function validForm($str): string
     {
         return htmlspecialchars(stripslashes(trim($str)));
+    }
+
+    /**
+     * @param object $vicariat
+     * @return object|false
+     */
+    public function codeVicariat(object $vicariat): object|false
+    {
+        $slug = $this->slug($vicariat->getNom());
+        $lastVicariat = $this->allRepositories->getLastVicariat($slug);
+        if ($lastVicariat === false) return false;
+
+        $code = (int) $lastVicariat->getCode() + 1;
+
+        $vicariat->setSlug($slug);
+        $vicariat->setCode($code);
+
+        return $vicariat;
+    }
+
+    public function codeDoyenne(object $doyenne): object|false
+    {
+        $slug = $this->slug($doyenne->getNom());
+        $lastDoyenne = $this->allRepositories->getLastDoyenne($slug);
+        if ($lastDoyenne === false) return false;
+
+        $codeVicatariat = $lastDoyenne->getVicariat();
+        if (!$codeVicatariat) return false;
+
+        if (!$lastDoyenne) {
+            $code = (int) $codeVicatariat->getCode() . '' . 10;
+        }else{
+            $suffixe = substr($lastDoyenne->getCode(), -2);
+
+            $code = (int)$codeVicatariat->getCode().''.(int) $suffixe + 1;
+        }
+
+        $doyenne->setSlug($slug);
+        $doyenne->setCode($code);
+
+        return $doyenne;
+    }
+
+    public function updateCodeDoyenne(Doyenne $doyenne): void
+    {
+        $newCode = (int) $doyenne->getVicariat()->getCode().substr($doyenne->getCode(), -2);
+        $doyenne->setCode($newCode);
     }
 }

@@ -27,12 +27,8 @@ final class BackendVicariatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $this->gestion->slug($vicariat->getNom());
-            $vicariat->setSlug($slug);
-            $vicariat->setCode($this->gestion->codeVicariat());
 
-            // Vérification de l'unicité
-            if ($this->gestion->uniciteVicariat($slug)){
+            if ($this->gestion->codeVicariat($vicariat) === false){
                 sweetalert()->addError("Attention, ce vicariat a déjà été ajouté!");
                 return $this->redirectToRoute('app_backend_vicariat_index',[], Response::HTTP_SEE_OTHER);
             }
