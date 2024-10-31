@@ -60,7 +60,7 @@ class ApiWaveController extends AbstractController
                     $participation->setWaveWhenCompleted($content->when_completed);
                     $participation->setWaveWhenCreated($content->when_created);
 
-                    $aspirant->setStatut('VALIDE');
+                    $aspirant->setStatut('SOUMIS');
 
                     $this->entityManager->flush();
                 }

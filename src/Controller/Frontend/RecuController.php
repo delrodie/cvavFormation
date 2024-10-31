@@ -63,6 +63,9 @@ class RecuController extends AbstractController
         if ($data['transaction_id'])
             $participation->setWaveTransactionId($data['transaction_id']);
 
+        // Mise a jour de Campeur
+        $participation->getCampeur()->setStatut('VALIDE');
+
         $this->entityManager->flush();
 
         return true;
