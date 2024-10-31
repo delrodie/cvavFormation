@@ -48,6 +48,9 @@ class Participer
     #[ORM\ManyToOne]
     private ?Formation $formation = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $waveTransactionId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -195,5 +198,17 @@ class Participer
     public function setUpdatedAtValue(): \DateTime
     {
         return $this->updatedAt = new \DateTime();
+    }
+
+    public function getWaveTransactionId(): ?string
+    {
+        return $this->waveTransactionId;
+    }
+
+    public function setWaveTransactionId(?string $waveTransactionId): static
+    {
+        $this->waveTransactionId = $waveTransactionId;
+
+        return $this;
     }
 }
