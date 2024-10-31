@@ -32,7 +32,8 @@ class RecuController extends AbstractController
             if ($wave !== true) return new Response ($wave);
         }
         return $this->render('frontend/recu.html.twig',[
-            'participation' => $participation
+            'participation' => $participation,
+            'formation' => $this->allRepositories->getFormation()
         ]);
     }
 

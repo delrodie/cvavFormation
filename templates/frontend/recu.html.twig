@@ -12,7 +12,10 @@
                 <h2 class="titre-activite">
                     Camp de formation
                 </h2>
-{#                <h3>Je participe à cette édition</h3>#}
+                {% if formation %}
+                    <h3>{{ formation.nom }} - {{ formation.lieu }}</h3>
+                {% endif %}
+
             </div>
         </div>
     </div>
