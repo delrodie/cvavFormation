@@ -75,6 +75,8 @@ class ApiPaiementController extends AbstractController
 
         $this->entityManager->flush();
 
+        $request->getSession()->get('information', '');
+
         $result = [
             'matricule' => $campeur->getMatricule(),
             'montant' => $participation->getMontant(),

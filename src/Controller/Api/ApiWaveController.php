@@ -63,6 +63,9 @@ class ApiWaveController extends AbstractController
                     $aspirant->setStatut('SOUMIS');
 
                     $this->entityManager->flush();
+
+                    $request->getSession()->get('information', '');
+                    $request->getSession()->get('campeur', '');
                 }
             }
 
