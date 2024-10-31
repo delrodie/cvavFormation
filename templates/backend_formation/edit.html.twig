@@ -1,0 +1,121 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}{{ parent() }} Gestion liste des formation{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des formations</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Gestion</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Formation</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-medall"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Liste</h5></div>
+                                <div class="col">
+                                    <div class="action">
+                                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#primary-header-modal"><i class="ti-plus"></i> Ajouter</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="listes" class="table table-responsive border table-striped table-bordered display text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase">#</th>
+                                        <th class="text-center text-uppercase">Noms</th>
+                                        <th class="text-center text-uppercase">Lieu</th>
+                                        <th class="text-center text-uppercase">Montant</th>
+                                        <th class="text-center text-uppercase">Debut</th>
+                                        <th class="text-center text-uppercase">Fin</th>
+                                        <th class="text-center text-uppercase">Dead Line</th>
+                                        <th class="text-center text-uppercase">actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for formation in formations %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td class="text-start">{{ formation.nom }}</td>
+                                            <td>{{ formation.lieu }}</td>
+                                            <td class="text-start">{{ formation.montant }}</td>
+                                            <td class="text-center">{{ formation.debutAt ? formation.debutAt|date('Y-m-d') }}</td>
+                                            <td class="text-center">{{ formation.finAt ? formation.finAt|date('Y-m-d') }}</td>
+                                            <td class="text-center">{{ formation.dateLineAt ? formation.dateLineAt|date('Y-m-d') }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ path('app_backend_formation_show', {'id': formation.id}) }}"><i class="ti-receipt"></i></a>
+                                                &nbsp; | &nbsp;
+                                                <a href="{{ path('app_backend_formation_edit', {'id': formation.id}) }}"><i class="ti-pencil-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">Aucun vicariat trouvé</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="primary-header-modal" class="modal fade" tabindex="-1" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+            {{ include('backend_formation/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('backoffice/vendor/css/prism.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backoffice/vendor/DataTables/datatables.min.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('backoffice/vendor/js/prism.js') }}"></script>
+    <script src="{{ asset('backoffice/vendor/DataTables/datatables.min.js') }}"></script>
+    <script>
+        $('#listes').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        } );
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("primary-header-modal"));
+            modal.show();
+        });
+    </script>
+{% endblock %}
