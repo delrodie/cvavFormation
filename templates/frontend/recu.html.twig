@@ -6,13 +6,13 @@
     <div class="overflow-hidden">
         <div class="logo">
             <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
-                <img src="{{ absolute_url(asset('frontend/img/logo-activite.png')) }}" alt="" class="img-fluid activite">
+                <img src="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" alt="" class="img-fluid activite">
             </div>
             <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
                 <h2 class="titre-activite">
                     Camp de formation
                 </h2>
-                <h3>Je participe à cette édition</h3>
+{#                <h3>Je participe à cette édition</h3>#}
             </div>
         </div>
     </div>
@@ -41,6 +41,13 @@
                     <div class="col-4 libelle">Sexe</div>
                     <div class="col-8 valeur">: {{ participation.campeur.sexe }}</div>
                 </div>
+                <div class="row mt-2">
+                    <div class="col-4 libelle">Naissance</div>
+                    <div class="col-8 valeur">:
+                        {{ participation.campeur.dateNaissance ? participation.campeur.dateNaissance|date('d-m-Y') }}
+                        à {{ participation.campeur.lieuNaissance }}
+                    </div>
+                </div>
                 {% if participation.campeur.telephone %}
                     <div class="row mt-2">
                         <div class="col-4 libelle">Contact</div>
@@ -51,6 +58,25 @@
                 <div class="row mt-2">
                     <div class="col-4 libelle">Urgence</div>
                     <div class="col-8 valeur">: {{ participation.campeur.urgence }} / {{ participation.campeur.contactUrgence }}</div>
+                </div>
+                <hr>
+                <div class="row mt-2">
+                    <div class="col-4 libelle">Baptême</div>
+                    <div class="col-8 valeur">: {{ participation.campeur.bapteme ? 'OUI' : 'NON' }}</div>
+                </div>
+                {% if participation.campeur.bapteme %}
+                    <div class="row mt-2">
+                        <div class="col-4 libelle">Confirmation</div>
+                        <div class="col-8 valeur">: {{ participation.campeur.confirmation ? 'OUI' : 'NON' }}</div>
+                    </div>
+                {% endif %}
+                <div class="row mt-2">
+                    <div class="col-4 libelle">Formation à suivre</div>
+                    <div class="col-8 valeur">: {{ participation.campeur.niveau }}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4 libelle">Evaluation</div>
+                    <div class="col-8 valeur">: {{ participation.campeur.evaluation }}</div>
                 </div>
                 <hr>
                 <div class="row mt-2">
@@ -65,11 +91,21 @@
                     <div class="col-4 libelle">Section</div>
                     <div class="col-8 valeur">: {{ participation.campeur.section.paroisse }}</div>
                 </div>
-                <hr>
                 <div class="row mt-2">
                     <div class="col-4 libelle">Responsable</div>
                     <div class="col-8 valeur">: {{ participation.campeur.responsable }} ({{ participation.campeur.responsableContact }})</div>
                 </div>
+                <hr>
+                <div class="row mt-2">
+                    <div class="col-4 libelle">Traitement médical?</div>
+                    <div class="col-8 valeur">: {{ participation.campeur.medical ? 'OUI' : 'NON' }}</div>
+                </div>
+                {% if participation.campeur.medical %}
+                    <div class="row mt-2">
+                        <div class="col-4 libelle">Traitement</div>
+                        <div class="col-8 valeur">: {{ participation.campeur.traitement }}</div>
+                    </div>
+                {% endif %}
                 <div class="row mt-3">
                     <div class="col-4 libelle">Montant payé</div>
                     <div class="col-8 montant">: &nbsp;{{ participation.montant|number_format(0,'','.') }} FCFA</div>
