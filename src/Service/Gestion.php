@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Doyenne;
+use App\Entity\Section;
 use Symfony\Component\String\AbstractUnicodeString;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -115,5 +116,35 @@ class Gestion
     {
         $newCode = (int) $doyenne->getVicariat()->getCode().substr($doyenne->getCode(), -2);
         $doyenne->setCode($newCode);
+    }
+
+    public function codeSection(Section $section): false|Section
+    {
+        // Slug
+        $slug = $this->slug($section->getParoisse());
+        $lastSection = $this->allRepositories->getLastSection($slug);
+
+        // Verifier la disponibilité du doyenné
+        $codeDoyenne = $section->getDoyenne();
+        if ($lastSection === false || !$codeDoyenne) return false;
+
+        // Gérér le code de section
+        $code = !$lastSection
+            ? (int)  $codeDoyenne->getCode(). '100'
+            : (int) $codeDoyenne->getCode().((int) substr($lastSection->getCode(), -3) + 1);
+
+
+        // Mise à jour de la section
+        $section->setSlug($slug);
+        $section->setCode($code);
+
+        return $section;
+    }
+
+    public function updateCodeSection(Section $section): void
+    {
+        $newCode = (int) $section->getDoyenne()->getCode().''.substr($section->getCode(), -3);
+        $section->setCode($newCode);
+        $section->setSlug($section->getParoisse());
     }
 }

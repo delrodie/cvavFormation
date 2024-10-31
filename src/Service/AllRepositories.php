@@ -16,7 +16,8 @@ class AllRepositories
         private VicariatRepository  $vicariatRepository,
         private DoyenneRepository   $doyenneRepository,
         private SectionRepository   $sectionRepository,
-        private FormationRepository $formationRepository, private readonly ParticiperRepository $participerRepository
+        private FormationRepository $formationRepository,
+        private readonly ParticiperRepository $participerRepository
     )
     {
     }
@@ -89,5 +90,13 @@ class AllRepositories
         if ($lastDoyenne) return false;
 
         return $this->doyenneRepository->findOneBy([],['id' => "DESC"]);
+    }
+
+    public function getLastSection(string $slug)
+    {
+        $lastSection =  $this->sectionRepository->findOneBy(['slug' => $slug]);
+        if ($lastSection) return false;
+
+        return $this->sectionRepository->findOneBy([],['id' => "DESC"]);
     }
 }
