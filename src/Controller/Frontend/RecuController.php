@@ -33,7 +33,6 @@ class RecuController extends AbstractController
         }
         return $this->render('frontend/recu.html.twig',[
             'participation' => $participation,
-            'formation' => $this->allRepositories->getFormation()
         ]);
     }
 
