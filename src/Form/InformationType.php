@@ -91,7 +91,8 @@ class InformationType extends AbstractType
                     '' => '',
                     'OUI' => true,
                     'NON' => false
-                ]
+                ],
+                'label' => "Êtes-vous sur un traitement médical ?"
             ])
             ->add('traitement', TextareaType::class,[
                 'attr' => ['class' => 'form-control form-control-lg', ],

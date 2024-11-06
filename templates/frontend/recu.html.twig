@@ -120,7 +120,10 @@
         </div>
     </div>
     <div class="text-center mt-5">
-        <a href="#" class="btn btn-outline-danger btn-sm" id="btnNoPrint">Backoffice</a>
+        {% if is_granted('ROLE_USER') %}
+            <a href="#" class="btn btn-outline-danger btn-sm" id="btnNoPrint">Backoffice</a>
+        {% endif %}
+
         <a href="{{ absolute_url(path('app_home')) }}" id="btnNoPrint" class="btn btn-outline-secondary btn-sm">Retour</a>
         <button id="print-button" class="btn btn-outline-primary btn-sm">Imprimer</button>
     </div>
