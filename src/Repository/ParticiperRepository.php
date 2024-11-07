@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Participer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,6 +27,39 @@ class ParticiperRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult()
             ;
+    }
+
+    public function findAllByStatut(?bool $statut)
+    {
+        $query = $this->globalSelect();
+        if ($statut){
+            $query->where('p.waveCheckoutStatus = :statut');
+        }else{
+            $query->where('p.waveCheckoutStatus <> :statut');
+        }
+
+        return $query->setParameter('statut', 'complete')
+            ->getQuery()->getResult();
+    }
+
+    public function findByMatricule($matricule)
+    {
+        return $this->globalSelect()
+            ->where('c.matricule = :matricule')
+            ->setParameter('matricule', $matricule)
+            ->getQuery()->getOneOrNullResult()
+            ;
+    }
+
+    private function globalSelect(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('c', 's', 'd', 'v', 'f')
+            ->join('p.formation', 'f')
+            ->join('p.campeur', 'c')
+            ->join('c.section', 's')
+            ->join('s.doyenne', 'd')
+            ->join('d.vicariat', 'v');
     }
 
     //    /**
@@ -52,4 +86,5 @@ class ParticiperRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
 }

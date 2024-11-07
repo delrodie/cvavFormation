@@ -1,0 +1,188 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}{{ parent() }} Liste des participants{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des participants</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Participants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Confirmés</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="formParticipant">
+            <div class="card-header">
+                <h6 class="card-title">{{ participant.nom}} {{ participant.prenoms }} - <strong style="color: #0d6efd">{{ participant.matricule }}</strong></h6>
+            </div>
+            <div class="card-body">
+                <div class="row form-group">
+                    <div class="col-6 mt-3">
+                        <label for="">Nom</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.nom }}" readonly>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Prenoms</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.prenoms }}" readonly>
+                    </div>
+                    <div class="col-3 mt-3">
+                        <label for="">Date de naissance</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.date_naissance|date('d/m/Y') }}" readonly>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Lieu de naissance</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.lieu_naissance }}" readonly>
+                    </div>
+                    <div class="col-3 mt-3">
+                        <label for="">Sexe</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.sexe }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Telephone</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.telephone }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Baptême</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.bapteme }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Confirmation</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.confirmation }}" readonly>
+                    </div>
+                    <div class="col-5 mt-3">
+                        <label for="">Evaluation</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.evaluation }}" readonly>
+                    </div>
+                    <div class="col-7 mt-3">
+                        <label for="">Niveau de formation</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.niveau }}" readonly>
+                    </div>
+                    <div class="col-2 mt-3">
+                        <label for="">Traitement médical</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.medical }}" readonly>
+                    </div>
+                    <div class="col-10 mt-3">
+                        <label for="">Traitement</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.traitement }}" readonly>
+                    </div>
+                    <div class="col-3 mt-3">
+                        <label for="">En cas d'urgence</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.urgence }}" readonly>
+                    </div>
+                    <div class="col-3 mt-3">
+                        <label for="">Contact en cas d'urgence</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.contact_urgence }}" readonly>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Vicariat</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.vicariat }}" readonly>
+                    </div>
+                    <div class="col-5 mt-3">
+                        <label for="">Doyenné</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.doyenne }}" readonly>
+                    </div>
+                    <div class="col-7 mt-3">
+                        <label for="">Section de base</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.section }}" readonly>
+                    </div>
+                    <div class="col-8 mt-3">
+                        <label for="">Nom du responsable</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.responsable }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Contact responsable</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.responsable_contact }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Date d'inscription</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.created_at ? participant.created_at|date('Y-m-d H:i:s') : '' }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Paiemant Wave</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.payment_status == 'succeeded' ? 'EFFECTUE' : 'Encours'  }}" readonly>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="">Montant</label>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.montant }}" readonly>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <a href="{{ absolute_url(asset('/upload/sacrement/' ~ participant.sacrement)) }}" target="_blank"><i class="ti-file"></i> Carnet de baptême (sacrement)</a>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <a href="{{ absolute_url(asset('/upload/dernier_culte' ~ participant.dernier_culte)) }}" target="_blank"><i class="ti-file"></i> Carnet de baptême (dernier de culte)</a>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <a href="{{ absolute_url(asset('/upload/attestation/' ~ participant.attestation)) }}" target="_blank"><i class="ti-file"></i> Attestation de dernier camp</a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-2 offset-6 d-grid">
+                        <a href="{{ absolute_url(path('app_backend_participant_confirme')) }}" class="btn btn-outline-secondary">Retour</a>
+                    </div>
+                    <div class="col-2 d-grid">
+                        <a href="#" class="btn btn-primary">Modifier</a>
+                    </div>
+                    <div class="col-2 d-grid">
+                        <button class="btn btn-danger" id="btnPrint">Imprimer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @media print{
+            #btnPrint{
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function(){
+            $('#btnPrint').click(function(){
+
+                printParticipant();
+            })
+        });
+        function printParticipant() {
+            const formParticipant = document.getElementById('formParticipant');
+            console.log(formParticipant);
+
+            const printWindows = window.open('', '', 'height=600,width=800');
+            const printContent = formParticipant.innerHTML;
+
+            printWindows.document.write('<html lang="fr"><head><title>Impression du Participant</title>');
+            printWindows.document.write('<style>body { font-family: Arial, sans-serif; margin: 20px; } input{border: none; color: black; font-weight: bold;} div{margin-top: 10px;} #btnPrint{ display: none} .btn{display: none}</style>');
+            printWindows.document.write(printContent);
+            printWindows.document.write('</body></html>');
+
+            printWindows.print();
+        }
+    </script>
+{% endblock %}
+
+

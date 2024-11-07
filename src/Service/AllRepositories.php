@@ -99,4 +99,56 @@ class AllRepositories
 
         return $this->sectionRepository->findOneBy([],['id' => "DESC"]);
     }
+
+    public function getAllParticipantByStatut(bool $statut = null): array
+    {
+        $participants = $this->participerRepository->findAllByStatut($statut);
+        $result=[]; $i=0;
+
+        foreach ($participants as $participant) {
+            $result[$i++] = $this->participantShow($participant);
+        }
+
+        return $result;
+    }
+
+    public function getParticipant($matricule): array
+    {
+        return $this->participantShow($this->participerRepository->findByMatricule($matricule));
+    }
+
+    public function participantShow($participant): array
+    {
+        return [
+            'matricule' => $participant->getCampeur()->getMatricule(),
+            'nom' => $participant->getCampeur()->getNom(),
+            'prenoms' => $participant->getCampeur()->getPrenoms(),
+            'telephone' => $participant->getCampeur()->getTelephone(),
+            'bapteme' => $participant->getCampeur()->isBapteme() ? 'OUI' : 'NON',
+            'confirmation' => $participant->getCampeur()->isConfirmation() ? 'OUI' : 'NON',
+            'niveau' => $participant->getCampeur()->getNiveau(),
+            'evaluation' => $participant->getCampeur()->getEvaluation(),
+            'medical' => $participant->getCampeur()->isMedical() ? 'OUI' : 'NON',
+            'traitement' => $participant->getCampeur()->getTraitement(),
+            'urgence' => $participant->getCampeur()->getUrgence(),
+            'contact_urgence' => $participant->getCampeur()->getContactUrgence(),
+            'sexe' => $participant->getCampeur()->getSexe(),
+            'date_naissance' => $participant->getCampeur()->getDateNaissance(),
+            'lieu_naissance' => $participant->getCampeur()->getLieuNaissance(),
+            'responsable' => $participant->getCampeur()->getResponsable(),
+            'responsable_contact' => $participant->getCampeur()->getResponsableContact(),
+            'section' => $participant->getCampeur()->getSection()->getParoisse(),
+            'doyenne' => $participant->getCampeur()->getSection()->getDoyenne()->getNom(),
+            'vicariat' => $participant->getCampeur()->getSection()->getDoyenne()->getVicariat()->getNom(),
+            'formation' => $participant->getFormation()->getNom(),
+            'lieu_formation' => $participant->getFormation()->getLieu(),
+            'montant' => $participant->getMontant(),
+            'created_at' => $participant->getWaveWhenCompleted(),
+            'statut' => $participant->getWaveCheckoutStatus(),
+            'payment_status' => $participant->getWavePaymentStatus(),
+            'sacrement' => $participant->getCampeur()->getSacrement(),
+            'dernier_culte' => $participant->getCampeur()->getDernierCulte(),
+            'attestation' => $participant->getCampeur()->getAttestation()
+        ];
+    }
 }
