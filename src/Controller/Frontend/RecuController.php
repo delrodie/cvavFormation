@@ -25,7 +25,7 @@ class RecuController extends AbstractController
     #[Route('/{matricule}', name: 'app_frontend_recu_show', methods: ['GET'])]
     public function show($matricule): Response
     {
-        $participation = $this->allRepositories->getParticipationByCampeur($matricule);
+        $participation = $this->getParticipant($matricule);
 
         if ($participation && $participation->getWaveCheckoutStatus() !== 'complete'){
             $wave = $this->wave($participation);
@@ -36,7 +36,34 @@ class RecuController extends AbstractController
         ]);
     }
 
-    public function wave($participation)
+    #[Route('/checkin/{matricule}', name: 'app_frontend_recu_checkin',methods: ['GET'])]
+    public function checkin($matricule): Response
+    {
+        $participation = $this->getParticipant($matricule);
+        if ($participation->getWaveCheckoutStatus() !== 'complete'){
+            $this->wave($participation);
+        }
+
+        return $this->redirectToRoute('app_backend_participant_show',['matricule' => $participation->getCampeur()->getMatricule()]);
+    }
+
+    /**
+     * Recherche du participant à partir de son matricule
+     *
+     * @param $matricule
+     * @return mixed
+     */
+    private function getParticipant($matricule): mixed
+    {
+        $aspirant = $this->allRepositories->getParticipationByCampeur($matricule);
+        if (!$aspirant){
+            throw $this->createNotFoundException("Cet aspirant n'a pas été trouvé. Veuillez entrer le bon matricule");
+        }
+
+        return $aspirant;
+    }
+
+    public function wave($participation): true|string
     {
         $response = $this->httpClient->request(
             'GET',
@@ -52,7 +79,7 @@ class RecuController extends AbstractController
             return  "HTTP Error ".$response->getStatusCode();
         }
 
-        $data = $response->toArray();
+        $data = $response->toArray(); //dd($data);
 
         if ($data['checkout_status'])
             $participation->setWaveCheckoutStatus($data['checkout_status']);
@@ -60,8 +87,8 @@ class RecuController extends AbstractController
             $participation->setWavePaymentStatus($data['payment_status']);
         if ($data['when_completed'])
             $participation->setWaveWhenCompleted($data['when_completed']);
-        if ($data['transaction_id'])
-            $participation->setWaveTransactionId($data['transaction_id']);
+//        if ($data['transaction_id'])
+//            $participation->setWaveTransactionId($data['transaction_id']);
 
         // Mise a jour de Campeur
         $participation->getCampeur()->setStatut('VALIDE');

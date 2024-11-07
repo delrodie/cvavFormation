@@ -40,7 +40,8 @@ class InformationType extends AbstractType
             ])
             ->add('lieuNaissance', TextType::class,[
                 'attr' => ['class' => 'form-control form-control-lg', 'placeholder' => "Lieu de naissance", 'autocomplete' => "off"],
-                'label' => "Lieu de naissance"
+                'label' => "Lieu de naissance (pas obligatoire)",
+                'required' => false
             ])
             ->add('telephone', TelType::class,[
                 'attr' => ['class' => 'form-control form-control-lg', 'autocomplete' => "off", 'maxLength' =>10, 'pattern' => "^[0-9]{10}"],

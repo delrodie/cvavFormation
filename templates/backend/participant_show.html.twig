@@ -113,12 +113,12 @@
                         <input type="text" class="form-control fw-bold text-primary" value="{{ participant.created_at ? participant.created_at|date('Y-m-d H:i:s') : '' }}" readonly>
                     </div>
                     <div class="col-4 mt-3">
-                        <label for="">Paiemant Wave</label>
-                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.payment_status == 'succeeded' ? 'EFFECTUE' : 'Encours'  }}" readonly>
+                        <label for="">Paiement Wave</label>
+                        <input type="text" class="form-control fw-bold {{ participant.payment_status|wave_paiement_css }}" value="{{ participant.payment_status|wave_paiement_status  }}" readonly>
                     </div>
                     <div class="col-4 mt-3">
                         <label for="">Montant</label>
-                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.montant }}" readonly>
+                        <input type="text" class="form-control fw-bold text-primary" value="{{ participant.payment_status == 'succeeded' ? participant.montant  }}" readonly>
                     </div>
                     <div class="col-12 mt-3">
                         <a href="{{ absolute_url(asset('/upload/sacrement/' ~ participant.sacrement)) }}" target="_blank"><i class="ti-file"></i> Carnet de baptême (sacrement)</a>

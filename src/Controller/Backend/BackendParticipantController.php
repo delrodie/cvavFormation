@@ -19,18 +19,24 @@ class BackendParticipantController extends AbstractController
     #[Route('/', name: 'app_backend_participant_confirme')]
     public function confirme(): Response
     {
-        //dd($this->allRepositories->getAllParticipantByStatut(true));
         return $this->render('backend/participant_confirme.html.twig',[
             'participants' => $this->allRepositories->getAllParticipantByStatut(true)
         ]);
     }
 
-    #[Route('/{matricule}', name: 'app_backend_participant_show',methods: ['GET'])]
+    #[Route('/{matricule}', name: 'app_backend_participant_show', methods: ['GET'])]
     public function show($matricule): Response
     {
-//        dd($this->allRepositories->getParticipant($matricule));
         return $this->render('backend/participant_show.html.twig',[
             'participant' => $this->allRepositories->getParticipant($matricule)
+        ]);
+    }
+
+    #[Route('/non/confirme', name: 'app_backend_participant_nonconfirme')]
+    public function nonconfirme(): Response
+    { //dd($this->allRepositories->getAllParticipantByStatut());
+        return $this->render('backend/participant_nonconfirme.html.twig',[
+            'participants' => $this->allRepositories->getAllParticipantByStatut(),
         ]);
     }
 }

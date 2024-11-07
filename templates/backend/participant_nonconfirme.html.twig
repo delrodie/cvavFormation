@@ -1,0 +1,174 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}{{ parent() }} Liste des participants{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des participants</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Participants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Confirmés</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Liste</h5></div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div id="table-loader" class="table-loader">
+                                <div class="loader"></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listes" class="table  border table-striped table-bordered display text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase">#</th>
+                                        <th class="text-center text-uppercase">Vicariat</th>
+                                        <th class="text-center text-uppercase">Doyenne</th>
+                                        <th class="text-center text-uppercase">Section</th>
+                                        <th class="text-center text-uppercase">Nom</th>
+                                        <th class="text-center text-uppercase">Date de naissance</th>
+                                        <th class="text-center text-uppercase">Lieu de naissance</th>
+                                        <th class="text-center text-uppercase">Matricule</th>
+                                        <th class="text-center text-uppercase">Sexe</th>
+                                        <th class="text-center text-uppercase">Contact</th>
+                                        <th class="text-center text-uppercase">Baptême</th>
+                                        <th class="text-center text-uppercase">Confirmation</th>
+                                        <th class="text-center text-uppercase">Niveau</th>
+                                        <th class="text-center text-uppercase">Evaluation</th>
+                                        <th class="text-center text-uppercase">Traitement médical</th>
+                                        <th class="text-center text-uppercase">Pathologie</th>
+                                        <th class="text-center text-uppercase">Contact Urgence</th>
+                                        <th class="text-center text-uppercase">Responsable</th>
+                                        <th class="text-center text-uppercase">Contact responsable</th>
+                                        <th class="text-center text-uppercase">Montant</th>
+                                        <th class="text-center text-uppercase">Date</th>
+                                        <th class="text-center text-uppercase">Recu</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for participant in participants %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td class="">{{ participant.vicariat }}</td>
+                                            <td class="">{{ participant.doyenne }}</td>
+                                            <td class="">{{ participant.section }}</td>
+                                            <td class="">
+                                                <a href="{{ path('app_backend_participant_show', {'matricule': participant.matricule}) }}">
+                                                    {{ participant.nom }} {{ participant.prenoms }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center">{{ participant.date_naissance|date('d/m/Y') }}</td>
+                                            <td class="text-center">{{ participant.lieu_naissance }}</td>
+                                            <td class="text-center">{{ participant.matricule }}</td>
+                                            <td class="text-center">{{ participant.sexe }}</td>
+                                            <td class="text-center">{{ participant.telephone }}</td>
+                                            <td class="text-center">{{ participant.bapteme }}</td>
+                                            <td class="text-center">{{ participant.confirmation }}</td>
+                                            <td class="text-center">{{ participant.niveau }}</td>
+                                            <td class="text-center">{{ participant.evaluation }}</td>
+                                            <td class="text-center">{{ participant.medical }}</td>
+                                            <td class="text-center">{{ participant.traitement }}</td>
+                                            <td class="text-center">{{ participant.urgence }} ({{ participant.contact_urgence }})</td>
+                                            <td class="text-center">{{ participant.responsable }} </td>
+                                            <td class="text-center">{{ participant.responsable_contact }} </td>
+                                            <td class="text-center {{ participant.payment_status|wave_paiement_css }}">{{ participant.payment_status == 'succeeded' ? 5000 : participant.payment_status|wave_paiement_status }}</td>
+                                            <td class="text-center">{{ participant.created_at|date('Y-m-d H:i:s') }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ path('app_frontend_recu_checkin', {'matricule': participant.matricule}) }}" target="_blank">
+                                                    <i class="ti-file"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="21">Aucun enregistrement</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('backoffice/vendor/css/prism.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backoffice/vendor/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/vendor/css/select2.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('backoffice/vendor/js/prism.js') }}"></script>
+    <script src="{{ asset('backoffice/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/dataTables.scroller.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/scroller.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function() {
+            var tableLoader = $('#table-loader');
+            var table = $('#listes');
+
+            table.on('init.dt', function() {
+                tableLoader.find('.loader').hide();
+                table.show();
+            });
+
+            table.DataTable({
+                // Configurations du DataTable
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                initComplete: function() {
+                    tableLoader.find('.loader').show();
+                    table.hide();
+                },
+                // scrollCollapse: true,
+                // scroller: true,
+                scrollX: 200
+            });
+        });
+    </script>
+    {#    <script>#}
+    {#        $('#listes').DataTable( {#}
+    {#            dom: 'Bfrtip',#}
+    {#            buttons: [#}
+    {#                'copy', 'excel', 'pdf'#}
+    {#            ]#}
+    {#        } );#}
+    {#    </script>#}
+    <script>
+        $(".select2").select2();
+    </script>
+{% endblock %}
