@@ -22,12 +22,26 @@ class Gestion
             $campeur->getNom().'-'.$campeur->getPrenoms().'-'.$campeur->getTelephone()
         );
 
-        $verification  = $this->allRepositories->findOneCampeur($slug);
+        $verification  = $this->allRepositories->findOneCampeurValide($slug);
         if ($verification){
             return false;
         }
 
         return $campeur->setSlug($slug);
+    }
+
+    public function modifCampeurBySlug($campeur)
+    {
+        $slug = $this->slug(
+            $campeur->getNom().'-'.$campeur->getPrenoms().'-'.$campeur->getTelephone()
+        );
+
+        $verification = $this->allRepositories->findOneCampeur($slug);
+        if ($verification){
+            return $verification;
+        }
+
+        return false;
     }
 
     /**

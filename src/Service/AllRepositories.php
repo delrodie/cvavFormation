@@ -27,6 +27,11 @@ class AllRepositories
         return $this->campeurRepository->findOneBy(['slug' => $slug]);
     }
 
+    public function findOneCampeurValide(string $slug)
+    {
+        return $this->campeurRepository->findOneBy(['slug' => $slug, 'statut' => 'VALIDE']);
+    }
+
     public function getVicariat(int $id = null, string $slug = null)
     {
         if ($id){

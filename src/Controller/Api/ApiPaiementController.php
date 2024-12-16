@@ -38,8 +38,13 @@ class ApiPaiementController extends AbstractController
         $participant = $request->getSession()->get('information');
 
         $formation = $this->allRepositories->getFormation();
-
+        
+        $verification = $this->gestion->modifCampeurBySlug($participant);
         $campeur = New Campeur();
+        if ($verification){
+            $campeur = $verification;
+        }
+        
         $campeur->setNom(strtoupper($participant->getNom()));
         $campeur->setPrenoms(strtoupper($participant->getPrenoms()));
         $campeur->setMatricule($this->gestion->matricule($reqDoyenne));
