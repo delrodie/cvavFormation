@@ -156,4 +156,31 @@ class AllRepositories
             'attestation' => $participant->getCampeur()->getAttestation()
         ];
     }
+
+    public function getMontantTotal()
+    {
+        $formation = $this->formationRepository->findOneBy([],['id' => "DESC"]); //dd($formation);
+        return $this->participerRepository->findMontantTotal($formation);
+    }
+
+    public function statistiquesByVicariat()
+    {
+        $vicariats = $this->vicariatRepository->findAll();
+        $formation = $this->formationRepository->findOneBy([],['id' => "DESC"]);
+        $allParticipants = $this->getAllParticipantByStatut(true);
+        $i=0; $result=[];
+
+        foreach ($vicariats as $vicariat) {
+            $participants = $this->participerRepository->findAllByVicariat($vicariat, $formation);
+          $pourcentage = ((count($participants) * 100 / count($allParticipants)));
+            $result[$i++] = [
+                'nom' => $vicariat->getNom(),
+                'participants' => $participants,
+                'montant' => $this->participerRepository->findMontantTotal($formation, $vicariat),
+                'pourcentage' => $pourcentage
+            ];
+        }
+
+        return $result;
+    }
 }

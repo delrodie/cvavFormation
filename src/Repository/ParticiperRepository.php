@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Participer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -49,6 +51,35 @@ class ParticiperRepository extends ServiceEntityRepository
             ->setParameter('matricule', $matricule)
             ->getQuery()->getOneOrNullResult()
             ;
+    }
+
+    public function findMontantTotal($formation, $vicariat = null)
+    {
+        $query =  $this->globalSelect()
+            ->select('SUM(p.montant)')
+            ->where('p.waveCheckoutStatus = :complete')
+            ->andWhere('p.formation = :formation')
+            ->setParameter('complete', 'complete')
+            ->setParameter('formation', $formation);
+        if ($vicariat){
+            $query->andWhere('v.id = :vicariat')
+                ->setParameter('vicariat', $vicariat);
+        }
+            return $query->getQuery()->getSingleScalarResult();
+    }
+
+    public function findAllByVicariat($vicariat, $formation)
+    {
+        return $this->globalSelect()
+            ->where('v.id = :vicariat')
+            ->andWhere('f.id = :formation')
+            ->andWhere('p.waveCheckoutStatus = :complete')
+            ->setParameters(new ArrayCollection([
+                new Parameter('vicariat', $vicariat),
+                new Parameter('formation', $formation),
+                new Parameter('complete', 'complete')
+            ]))
+            ->getQuery()->getResult();
     }
 
     private function globalSelect(): QueryBuilder
